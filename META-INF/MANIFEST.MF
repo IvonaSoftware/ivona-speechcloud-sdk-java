@@ -1,0 +1,8 @@
+Bundle-Version: 0.3.0
+Bundle-Name: IVONA SpeechCloud SDK for Java
+Bundle-SymbolicName: com.ivona.sdk
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: IVONA an Amazon Company
+Provide-Package: com.ivona.services.tts,
+ com.ivona.services.tts.model,
+ com.ivona.services.tts.model.transform
