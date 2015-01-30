@@ -12,7 +12,7 @@ A ready-to-use package is available through Maven:
 
 ```xml
 <dependency>
-    <groupId>com.ivonacloud</groupId>
+    <groupId>com.ivona</groupId>
     <artifactId>ivona-speechcloud-sdk-java</artifactId>
     <version>0.3.0</version>
 </dependency>
