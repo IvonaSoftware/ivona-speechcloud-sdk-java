@@ -12,8 +12,6 @@
  */
 package com.ivona.services.tts.model.transform.createspeech;
 
-import java.io.StringWriter;
-
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.DefaultRequest;
 import com.amazonaws.Request;
@@ -28,13 +26,32 @@ import com.ivona.services.tts.model.OutputFormat;
 import com.ivona.services.tts.model.Parameters;
 import com.ivona.services.tts.model.Voice;
 
+import java.io.StringWriter;
+
 /**
  * CreateSpeechRequest Marshaller - transforms CreateSpeechRequest class into Json POST request
  */
 public class CreateSpeechPostRequestMarshaller implements Marshaller<Request<CreateSpeechRequest>, CreateSpeechRequest>,
         CreateSpeechRequestMarshaller {
 
-    private final static String RESOURCE_PATH = "/CreateSpeech";
+    protected final static String RESOURCE_PATH = "CreateSpeech";
+
+    protected final static String JSON_KEY_INPUT = "Input";
+    protected final static String JSON_KEY_INPUT_DATA = "Data";
+    protected final static String JSON_KEY_INPUT_TYPE = "Type";
+    protected final static String JSON_KEY_OUTPUT_FORMAT = "OutputFormat";
+    protected final static String JSON_KEY_OUTPUT_FORMAT_CODEC = "Codec";
+    protected final static String JSON_KEY_OUTPUT_FORMAT_SAMPLE_RATE = "SampleRate";
+    protected final static String JSON_KEY_PARAMETERS = "Parameters";
+    protected final static String JSON_KEY_PARAMETERS_RATE = "Rate";
+    protected final static String JSON_KEY_PARAMETERS_VOLUME = "Volume";
+    protected final static String JSON_KEY_PARAMETERS_PARAGRAPH_BREAK = "ParagraphBreak";
+    protected final static String JSON_KEY_PARAMETERS_SENTENCE_BREAK = "SentenceBreak";
+    protected final static String JSON_KEY_VOICE = "Voice";
+    protected final static String JSON_KEY_VOICE_NAME = "Name";
+    protected final static String JSON_KEY_VOICE_LANGUAGE = "Language";
+    protected final static String JSON_KEY_VOICE_GENDER = "Gender";
+
     private final static String CHARSET = "UTF-8";
 
     public Request<CreateSpeechRequest> marshall(CreateSpeechRequest createSpeechRequest) {
@@ -62,13 +79,13 @@ public class CreateSpeechPostRequestMarshaller implements Marshaller<Request<Cre
             if (createSpeechRequest.getInput() != null) {
                 Input input = createSpeechRequest.getInput();
 
-                jsonWriter.key("Input");
+                jsonWriter.key(JSON_KEY_INPUT);
                 jsonWriter.object();
                 if (input.getData() != null) {
-                    jsonWriter.key("Data").value(input.getData());
+                    jsonWriter.key(JSON_KEY_INPUT_DATA).value(input.getData());
                 }
                 if (input.getType() != null) {
-                    jsonWriter.key("Type").value(input.getType());
+                    jsonWriter.key(JSON_KEY_INPUT_TYPE).value(input.getType());
                 }
                 jsonWriter.endObject();
             }
@@ -76,13 +93,13 @@ public class CreateSpeechPostRequestMarshaller implements Marshaller<Request<Cre
             if (createSpeechRequest.getOutputFormat() != null) {
                 OutputFormat outputFormat = createSpeechRequest.getOutputFormat();
 
-                jsonWriter.key("OutputFormat");
+                jsonWriter.key(JSON_KEY_OUTPUT_FORMAT);
                 jsonWriter.object();
                 if (outputFormat.getCodec() != null) {
-                    jsonWriter.key("Codec").value(outputFormat.getCodec());
+                    jsonWriter.key(JSON_KEY_OUTPUT_FORMAT_CODEC).value(outputFormat.getCodec());
                 }
                 if (outputFormat.getSampleRate() != null && outputFormat.getSampleRate() > 0) {
-                    jsonWriter.key("SampleRate").value((long) outputFormat.getSampleRate());
+                    jsonWriter.key(JSON_KEY_OUTPUT_FORMAT_SAMPLE_RATE).value((long) outputFormat.getSampleRate());
                 }
                 jsonWriter.endObject();
             }
@@ -90,19 +107,19 @@ public class CreateSpeechPostRequestMarshaller implements Marshaller<Request<Cre
             if (createSpeechRequest.getParameters() != null) {
                 Parameters parameters = createSpeechRequest.getParameters();
 
-                jsonWriter.key("Parameters");
+                jsonWriter.key(JSON_KEY_PARAMETERS);
                 jsonWriter.object();
                 if (parameters.getRate() != null) {
-                    jsonWriter.key("Rate").value(parameters.getRate());
+                    jsonWriter.key(JSON_KEY_PARAMETERS_RATE).value(parameters.getRate());
                 }
                 if (parameters.getVolume() != null) {
-                    jsonWriter.key("Volume").value(parameters.getVolume());
+                    jsonWriter.key(JSON_KEY_PARAMETERS_VOLUME).value(parameters.getVolume());
                 }
                 if (parameters.getSentenceBreak() != null) {
-                    jsonWriter.key("SentenceBreak").value((long) parameters.getSentenceBreak());
+                    jsonWriter.key(JSON_KEY_PARAMETERS_SENTENCE_BREAK).value((long) parameters.getSentenceBreak());
                 }
                 if (parameters.getParagraphBreak() != null) {
-                    jsonWriter.key("ParagraphBreak").value((long) parameters.getParagraphBreak());
+                    jsonWriter.key(JSON_KEY_PARAMETERS_PARAGRAPH_BREAK).value((long) parameters.getParagraphBreak());
                 }
                 jsonWriter.endObject();
             }
@@ -110,16 +127,16 @@ public class CreateSpeechPostRequestMarshaller implements Marshaller<Request<Cre
             if (createSpeechRequest.getVoice() != null) {
                 Voice voice = createSpeechRequest.getVoice();
 
-                jsonWriter.key("Voice");
+                jsonWriter.key(JSON_KEY_VOICE);
                 jsonWriter.object();
                 if (voice.getGender() != null) {
-                    jsonWriter.key("Gender").value(voice.getGender());
+                    jsonWriter.key(JSON_KEY_VOICE_GENDER).value(voice.getGender());
                 }
                 if (voice.getLanguage() != null) {
-                    jsonWriter.key("Language").value(voice.getLanguage());
+                    jsonWriter.key(JSON_KEY_VOICE_LANGUAGE).value(voice.getLanguage());
                 }
                 if (voice.getName() != null) {
-                    jsonWriter.key("Name").value(voice.getName());
+                    jsonWriter.key(JSON_KEY_VOICE_NAME).value(voice.getName());
                 }
                 jsonWriter.endObject();
             }

@@ -12,18 +12,6 @@
  */
 package com.ivona.services.tts;
 
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.AmazonWebServiceClient;
@@ -45,11 +33,11 @@ import com.amazonaws.http.JsonErrorResponseHandler;
 import com.amazonaws.http.JsonResponseHandler;
 import com.amazonaws.internal.StaticCredentialsProvider;
 import com.amazonaws.regions.Region;
+import com.amazonaws.services.s3.internal.ServiceUtils;
 import com.amazonaws.transform.JsonErrorUnmarshaller;
 import com.amazonaws.transform.JsonUnmarshallerContext;
 import com.amazonaws.transform.Unmarshaller;
 import com.ivona.services.tts.http.StreamResponseHandler;
-import com.ivona.services.tts.http.auth.AWS4HttpGetAwareSigner;
 import com.ivona.services.tts.model.CreateSpeechRequest;
 import com.ivona.services.tts.model.CreateSpeechResult;
 import com.ivona.services.tts.model.ListVoicesRequest;
@@ -59,6 +47,18 @@ import com.ivona.services.tts.model.transform.createspeech.CreateSpeechRequestMa
 import com.ivona.services.tts.model.transform.createspeech.CreateSpeechResultUnmarshaller;
 import com.ivona.services.tts.model.transform.listvoices.ListVoicesRequestMarshallerFactory;
 import com.ivona.services.tts.model.transform.listvoices.ListVoicesResultJsonUnmarshaller;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Ivona Speech Cloud Client Implementation
@@ -72,6 +72,8 @@ public class IvonaSpeechCloudClient extends AmazonWebServiceClient implements Iv
 
     private final static Pattern REGION_PATTERN = Pattern.compile(SERVICE_PROTOCOL + SERVICE_NAME +
             "\\.([^.]*)\\." + SERVICE_DOMAIN.replace(".", "\\."));
+
+    private final static int DEFAULT_GET_REQUEST_EXPIRATION_MINUTES = 5;
 
     private AWSCredentialsProvider awsCredentialsProvider;
     protected AWS4Signer signer;
@@ -154,7 +156,7 @@ public class IvonaSpeechCloudClient extends AmazonWebServiceClient implements Iv
         createSpeechRequest.setMethodType(MethodType.GET);
         Request<CreateSpeechRequest> request = CreateSpeechRequestMarshallerFactory.getMarshaller(
                 createSpeechRequest.getMethodType()).marshall(createSpeechRequest);
-        return translateRequestToURL(prepareRequestForGetUrl(request));
+        return ServiceUtils.convertRequestToUrl(prepareRequestForGetUrl(request));
     }
 
     @Override
@@ -176,7 +178,7 @@ public class IvonaSpeechCloudClient extends AmazonWebServiceClient implements Iv
         listVoicesRequest.setMethodType(MethodType.GET);
         Request<ListVoicesRequest> request = ListVoicesRequestMarshallerFactory.getMarshaller(
                 listVoicesRequest.getMethodType()).marshall(listVoicesRequest);
-        return translateRequestToURL(prepareRequestForGetUrl(request));
+        return ServiceUtils.convertRequestToUrl(prepareRequestForGetUrl(request));
     }
 
     @Override
@@ -238,7 +240,7 @@ public class IvonaSpeechCloudClient extends AmazonWebServiceClient implements Iv
         exceptionUnmarshallers = new ArrayList<JsonErrorUnmarshaller>();
         exceptionUnmarshallers.add(new JsonErrorUnmarshaller());
 
-        signer = new AWS4HttpGetAwareSigner();
+        signer = new AWS4Signer();
         signer.setServiceName(SERVICE_NAME);
 
         setServiceNameIntern(SERVICE_NAME);
@@ -283,47 +285,15 @@ public class IvonaSpeechCloudClient extends AmazonWebServiceClient implements Iv
             credentials = originalRequest.getRequestCredentials();
         }
         if (signRequest) {
-            signer.sign(request, credentials);
+            // expiration date is not currently supported on service side, but presignRequest method requires
+            // this argument so one with default value is provided.
+            Date expirationDate = DateTime.now(DateTimeZone.UTC)
+                    .plusMinutes(DEFAULT_GET_REQUEST_EXPIRATION_MINUTES).toDate();
+            signer.presignRequest(request, credentials, expirationDate);
         } else {
             executionContext.setSigner(signer);
             executionContext.setCredentials(credentials);
         }
         return request;
-    }
-
-    private String translateMapToQueryString(Map<String, String> map) throws UnsupportedEncodingException {
-        StringBuilder buffer = new StringBuilder();
-
-        boolean addAmp = false;
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            if (addAmp) {
-                buffer.append("&");
-            }
-
-            if (entry.getKey() != null && entry.getValue() != null) {
-                buffer.append(urlEncode(entry.getKey())).append("=").append(urlEncode(entry.getValue()));
-                addAmp = true;
-            }
-        }
-
-        return buffer.toString();
-    }
-
-    private URL translateRequestToURL(final Request<?> request) throws UnsupportedEncodingException {
-        StringBuilder buffer = new StringBuilder();
-        buffer.append(request.getEndpoint().toString()).append("/").append(request.getResourcePath()).append("?");
-        buffer.append(translateMapToQueryString(request.getParameters()));
-
-        URL url = null;
-        try {
-            url = new URL(buffer.toString());
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("Error while translating request to URL", e);
-        }
-        return url;
-    }
-
-    private String urlEncode(String s) throws UnsupportedEncodingException {
-        return URLEncoder.encode(s, "UTF-8");
     }
 }

@@ -12,20 +12,24 @@
  */
 package com.ivona.services.tts.model.transform.listvoices;
 
-import static com.fasterxml.jackson.core.JsonToken.END_ARRAY;
-import static com.fasterxml.jackson.core.JsonToken.END_OBJECT;
-import static com.fasterxml.jackson.core.JsonToken.FIELD_NAME;
-import static com.fasterxml.jackson.core.JsonToken.START_OBJECT;
-import static com.fasterxml.jackson.core.JsonToken.VALUE_NULL;
-
 import com.amazonaws.transform.JsonUnmarshallerContext;
 import com.amazonaws.transform.SimpleTypeJsonUnmarshallers;
 import com.amazonaws.transform.Unmarshaller;
 import com.fasterxml.jackson.core.JsonToken;
 import com.ivona.services.tts.model.Voice;
 
+import static com.fasterxml.jackson.core.JsonToken.END_ARRAY;
+import static com.fasterxml.jackson.core.JsonToken.END_OBJECT;
+import static com.fasterxml.jackson.core.JsonToken.FIELD_NAME;
+import static com.fasterxml.jackson.core.JsonToken.START_OBJECT;
+import static com.fasterxml.jackson.core.JsonToken.VALUE_NULL;
+
 public class VoiceJsonUnmarshaller implements Unmarshaller<Voice, JsonUnmarshallerContext> {
     private static VoiceJsonUnmarshaller instance;
+
+    protected final static String JSON_KEY_NAME = "Name";
+    protected final static String JSON_KEY_LANGUAGE = "Language";
+    protected final static String JSON_KEY_GENDER = "Gender";
 
     public Voice unmarshall(JsonUnmarshallerContext context) throws Exception {
 
@@ -49,15 +53,15 @@ public class VoiceJsonUnmarshaller implements Unmarshaller<Voice, JsonUnmarshall
             }
 
             if (token == FIELD_NAME || token == START_OBJECT) {
-                if (context.testExpression("Name", targetDepth)) {
+                if (context.testExpression(JSON_KEY_NAME, targetDepth)) {
                     context.nextToken();
                     voice.setName(SimpleTypeJsonUnmarshallers.StringJsonUnmarshaller.getInstance().unmarshall(context));
                 }
-                if (context.testExpression("Language", targetDepth)) {
+                if (context.testExpression(JSON_KEY_LANGUAGE, targetDepth)) {
                     context.nextToken();
                     voice.setLanguage(SimpleTypeJsonUnmarshallers.StringJsonUnmarshaller.getInstance().unmarshall(context));
                 }
-                if (context.testExpression("Gender", targetDepth)) {
+                if (context.testExpression(JSON_KEY_GENDER, targetDepth)) {
                     context.nextToken();
                     voice.setGender(SimpleTypeJsonUnmarshallers.StringJsonUnmarshaller.getInstance().unmarshall(context));
                 }

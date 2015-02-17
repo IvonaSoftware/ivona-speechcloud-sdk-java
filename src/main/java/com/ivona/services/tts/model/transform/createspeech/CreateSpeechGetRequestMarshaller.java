@@ -12,9 +12,6 @@
  */
 package com.ivona.services.tts.model.transform.createspeech;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.DefaultRequest;
 import com.amazonaws.Request;
@@ -24,13 +21,16 @@ import com.ivona.services.tts.IvonaSpeechCloudClient;
 import com.ivona.services.tts.model.CreateSpeechRequest;
 import com.ivona.services.tts.model.transform.MarshallerHelper;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * CreateSpeechRequest Marshaller - transforms CreateSpeechRequest class into GET request
  */
 public class CreateSpeechGetRequestMarshaller implements Marshaller<Request<CreateSpeechRequest>, CreateSpeechRequest>,
         CreateSpeechRequestMarshaller {
 
-    private final static String RESOURCE_PATH = "/CreateSpeech";
+    protected final static String RESOURCE_PATH = "CreateSpeech";
 
     protected final static String GET_PARAM_INPUT_DATA = "Input.Data";
     protected final static String GET_PARAM_INPUT_TYPE = "Input.Type";

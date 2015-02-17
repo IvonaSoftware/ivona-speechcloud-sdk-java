@@ -12,12 +12,6 @@
  */
 package com.ivona.services.tts.model.transform.listvoices;
 
-import static com.fasterxml.jackson.core.JsonToken.END_ARRAY;
-import static com.fasterxml.jackson.core.JsonToken.END_OBJECT;
-import static com.fasterxml.jackson.core.JsonToken.FIELD_NAME;
-import static com.fasterxml.jackson.core.JsonToken.START_OBJECT;
-import static com.fasterxml.jackson.core.JsonToken.VALUE_NULL;
-
 import com.amazonaws.transform.JsonUnmarshallerContext;
 import com.amazonaws.transform.ListUnmarshaller;
 import com.amazonaws.transform.Unmarshaller;
@@ -25,10 +19,18 @@ import com.fasterxml.jackson.core.JsonToken;
 import com.ivona.services.tts.model.ListVoicesResult;
 import com.ivona.services.tts.model.Voice;
 
+import static com.fasterxml.jackson.core.JsonToken.END_ARRAY;
+import static com.fasterxml.jackson.core.JsonToken.END_OBJECT;
+import static com.fasterxml.jackson.core.JsonToken.FIELD_NAME;
+import static com.fasterxml.jackson.core.JsonToken.START_OBJECT;
+import static com.fasterxml.jackson.core.JsonToken.VALUE_NULL;
+
 /**
  * ListVoicesResult Unmarshaller - transforms Json server response into ListVoicesResult
  */
 public class ListVoicesResultJsonUnmarshaller implements Unmarshaller<ListVoicesResult, JsonUnmarshallerContext> {
+
+    protected final static String JSON_KEY_VOICES = "Voices";
 
     public ListVoicesResult unmarshall(JsonUnmarshallerContext context) throws Exception {
         ListVoicesResult listVoicesResult = new ListVoicesResult();
@@ -51,7 +53,7 @@ public class ListVoicesResultJsonUnmarshaller implements Unmarshaller<ListVoices
             }
 
             if (token == FIELD_NAME || token == START_OBJECT) {
-                if (context.testExpression("Voices", targetDepth)) {
+                if (context.testExpression(JSON_KEY_VOICES, targetDepth)) {
                     listVoicesResult.setVoices(new ListUnmarshaller<Voice>(VoiceJsonUnmarshaller.getInstance())
                             .unmarshall(context));
                 }

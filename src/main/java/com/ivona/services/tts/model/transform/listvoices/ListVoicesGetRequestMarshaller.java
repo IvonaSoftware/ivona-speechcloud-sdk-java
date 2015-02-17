@@ -12,9 +12,6 @@
  */
 package com.ivona.services.tts.model.transform.listvoices;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.DefaultRequest;
 import com.amazonaws.Request;
@@ -24,17 +21,20 @@ import com.ivona.services.tts.IvonaSpeechCloudClient;
 import com.ivona.services.tts.model.ListVoicesRequest;
 import com.ivona.services.tts.model.transform.MarshallerHelper;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * ListVoicesRequest Marshaller - transforms ListVoicesRequest into GET request.
  */
 public class ListVoicesGetRequestMarshaller implements Marshaller<Request<ListVoicesRequest>, ListVoicesRequest>,
         ListVoicesRequestMarshaller {
 
-    private final static String PARAM_VOICE_NAME = "Voice.Name";
-    private final static String PARAM_VOICE_LANGUAGE = "Voice.Language";
-    private final static String PARAM_VOICE_GENDER = "Voice.Gender";
+    protected final static String PARAM_VOICE_NAME = "Voice.Name";
+    protected final static String PARAM_VOICE_LANGUAGE = "Voice.Language";
+    protected final static String PARAM_VOICE_GENDER = "Voice.Gender";
 
-    private final static String RESOURCE_PATH = "/ListVoices";
+    protected final static String RESOURCE_PATH = "ListVoices";
 
     public Request<ListVoicesRequest> marshall(ListVoicesRequest listVoicesRequest) {
 

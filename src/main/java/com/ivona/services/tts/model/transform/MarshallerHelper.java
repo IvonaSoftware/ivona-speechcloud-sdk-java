@@ -25,6 +25,8 @@ public class MarshallerHelper {
     }
 
     public static void putToMapIfNotNull(Map<String, String> map, final String key, final Short value) {
-        putToMapIfNotNull(map, key, value.toString());
+        if (value != null) {
+            map.put(key, value.toString());
+        }
     }
 }

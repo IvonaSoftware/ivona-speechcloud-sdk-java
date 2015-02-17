@@ -12,8 +12,6 @@
  */
 package com.ivona.services.tts.model.transform.listvoices;
 
-import java.io.StringWriter;
-
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.DefaultRequest;
 import com.amazonaws.Request;
@@ -25,14 +23,21 @@ import com.ivona.services.tts.IvonaSpeechCloudClient;
 import com.ivona.services.tts.model.ListVoicesRequest;
 import com.ivona.services.tts.model.Voice;
 
+import java.io.StringWriter;
+
 /**
  * ListVoicesRequest Marshaller - transforms ListVoicesRequest into Json request
  */
 public class ListVoicesPostRequestMarshaller implements Marshaller<Request<ListVoicesRequest>, ListVoicesRequest>,
         ListVoicesRequestMarshaller {
 
-    private final static String RESOURCE_PATH = "/ListVoices";
+    private final static String RESOURCE_PATH = "ListVoices";
     private final static String CHARSET = "UTF-8";
+
+    protected final static String JSON_KEY_VOICE = "Voice";
+    protected final static String JSON_KEY_GENDER = "Gender";
+    protected final static String JSON_KEY_LANGUAGE = "Language";
+    protected final static String JSON_KEY_NAME = "Name";
 
     public Request<ListVoicesRequest> marshall(ListVoicesRequest listVoicesRequest) {
 
@@ -57,17 +62,17 @@ public class ListVoicesPostRequestMarshaller implements Marshaller<Request<ListV
             if (listVoicesRequest.getVoice() != null) {
                 Voice voice = listVoicesRequest.getVoice();
 
-                jsonWriter.key("Voice");
+                jsonWriter.key(JSON_KEY_VOICE);
                 jsonWriter.object();
 
                 if (voice.getGender() != null) {
-                    jsonWriter.key("Gender").value(voice.getGender());
+                    jsonWriter.key(JSON_KEY_GENDER).value(voice.getGender());
                 }
                 if (voice.getLanguage() != null) {
-                    jsonWriter.key("Language").value(voice.getLanguage());
+                    jsonWriter.key(JSON_KEY_LANGUAGE).value(voice.getLanguage());
                 }
                 if (voice.getName() != null) {
-                    jsonWriter.key("Name").value(voice.getName());
+                    jsonWriter.key(JSON_KEY_NAME).value(voice.getName());
                 }
 
                 jsonWriter.endObject();
