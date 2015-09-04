@@ -18,15 +18,21 @@ import com.amazonaws.Request;
 import com.amazonaws.http.HttpMethodName;
 import com.amazonaws.transform.Marshaller;
 import com.amazonaws.util.StringInputStream;
+import com.amazonaws.util.json.JSONException;
 import com.amazonaws.util.json.JSONWriter;
 import com.ivona.services.tts.IvonaSpeechCloudClient;
 import com.ivona.services.tts.model.CreateSpeechRequest;
 import com.ivona.services.tts.model.Input;
 import com.ivona.services.tts.model.OutputFormat;
 import com.ivona.services.tts.model.Parameters;
+import com.ivona.services.tts.model.SpeechMarks;
 import com.ivona.services.tts.model.Voice;
 
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * CreateSpeechRequest Marshaller - transforms CreateSpeechRequest class into Json POST request
@@ -42,7 +48,13 @@ public class CreateSpeechPostRequestMarshaller implements Marshaller<Request<Cre
     protected final static String JSON_KEY_OUTPUT_FORMAT = "OutputFormat";
     protected final static String JSON_KEY_OUTPUT_FORMAT_CODEC = "Codec";
     protected final static String JSON_KEY_OUTPUT_FORMAT_SAMPLE_RATE = "SampleRate";
+    protected final static String JSON_KEY_OUTPUT_FORMAT_SPEECHMARKS = "SpeechMarks";
+    protected final static String JSON_KEY_OUTPUT_FORMAT_SPEECHMARKS_SENTENCE = "Sentence";
+    protected final static String JSON_KEY_OUTPUT_FORMAT_SPEECHMARKS_SSML = "Ssml";
+    protected final static String JSON_KEY_OUTPUT_FORMAT_SPEECHMARKS_VISEME = "Viseme";
+    protected final static String JSON_KEY_OUTPUT_FORMAT_SPEECHMARKS_WORD = "Word";
     protected final static String JSON_KEY_PARAMETERS = "Parameters";
+    protected final static String JSON_KEY_LEXICONS = "LexiconNames";
     protected final static String JSON_KEY_PARAMETERS_RATE = "Rate";
     protected final static String JSON_KEY_PARAMETERS_VOLUME = "Volume";
     protected final static String JSON_KEY_PARAMETERS_PARAGRAPH_BREAK = "ParagraphBreak";
@@ -51,8 +63,6 @@ public class CreateSpeechPostRequestMarshaller implements Marshaller<Request<Cre
     protected final static String JSON_KEY_VOICE_NAME = "Name";
     protected final static String JSON_KEY_VOICE_LANGUAGE = "Language";
     protected final static String JSON_KEY_VOICE_GENDER = "Gender";
-
-    private final static String CHARSET = "UTF-8";
 
     public Request<CreateSpeechRequest> marshall(CreateSpeechRequest createSpeechRequest) {
 
@@ -101,6 +111,26 @@ public class CreateSpeechPostRequestMarshaller implements Marshaller<Request<Cre
                 if (outputFormat.getSampleRate() != null && outputFormat.getSampleRate() > 0) {
                     jsonWriter.key(JSON_KEY_OUTPUT_FORMAT_SAMPLE_RATE).value((long) outputFormat.getSampleRate());
                 }
+                if (outputFormat.getSpeechMarks() != null) {
+                    jsonWriter.key(JSON_KEY_OUTPUT_FORMAT_SPEECHMARKS);
+                    jsonWriter.object();
+                    SpeechMarks speechMarks = outputFormat.getSpeechMarks();
+                    if (speechMarks != null) {
+                        if (speechMarks.isSentence()) {
+                            jsonWriter.key(JSON_KEY_OUTPUT_FORMAT_SPEECHMARKS_SENTENCE).value(true);
+                        }
+                        if (speechMarks.isSsml()) {
+                            jsonWriter.key(JSON_KEY_OUTPUT_FORMAT_SPEECHMARKS_SSML).value(true);
+                        }
+                        if (speechMarks.isViseme()) {
+                            jsonWriter.key(JSON_KEY_OUTPUT_FORMAT_SPEECHMARKS_VISEME).value(true);
+                        }
+                        if (speechMarks.isWord()) {
+                            jsonWriter.key(JSON_KEY_OUTPUT_FORMAT_SPEECHMARKS_WORD).value(true);
+                        }
+                    }
+                    jsonWriter.endObject();
+                }
                 jsonWriter.endObject();
             }
 
@@ -124,6 +154,11 @@ public class CreateSpeechPostRequestMarshaller implements Marshaller<Request<Cre
                 jsonWriter.endObject();
             }
 
+            if (createSpeechRequest.getLexiconNames() != null) {
+                List<String> names = createSpeechRequest.getLexiconNames();
+                jsonWriter.key(JSON_KEY_LEXICONS).value(names);
+            }
+
             if (createSpeechRequest.getVoice() != null) {
                 Voice voice = createSpeechRequest.getVoice();
 
@@ -143,10 +178,12 @@ public class CreateSpeechPostRequestMarshaller implements Marshaller<Request<Cre
             jsonWriter.endObject();
 
             String snippet = stringWriter.toString();
-            byte[] content = snippet.getBytes(CHARSET);
+            byte[] content = snippet.getBytes(UTF_8);
             request.setContent(new StringInputStream(snippet));
             request.addHeader("Content-Length", Integer.toString(content.length));
-        } catch (Exception e) {
+        } catch (JSONException e) {
+            throw new AmazonClientException("Unable to marshall request to JSON", e);
+        } catch (UnsupportedEncodingException e) {
             throw new AmazonClientException("Unable to marshall request to JSON", e);
         }
     }

@@ -13,18 +13,16 @@
 package com.ivona.services.tts.model;
 
 import java.io.InputStream;
-import java.io.Serializable;
 
 /**
  * Class representing CreateSpeech result
  * <p>
  * Please check the service documentation for more details.
  *
- * @see <a href="http://developer.ivona.com/en/speechcloud/speechcloud_developer_guide.html">Speech Cloud Developer Guide</a>
+ * @see <a href="http://developer.ivona.com/en/speechcloud/speechcloud_developer_guide.html">
+ *      Speech Cloud Developer Guide</a>
  */
-public class CreateSpeechResult implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class CreateSpeechResult {
 
     private String requestId;
     private String contentType;

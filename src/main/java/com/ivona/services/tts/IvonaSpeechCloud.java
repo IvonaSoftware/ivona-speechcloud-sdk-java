@@ -22,8 +22,13 @@ import com.amazonaws.ResponseMetadata;
 import com.amazonaws.regions.Region;
 import com.ivona.services.tts.model.CreateSpeechRequest;
 import com.ivona.services.tts.model.CreateSpeechResult;
+import com.ivona.services.tts.model.DeleteLexiconRequest;
+import com.ivona.services.tts.model.GetLexiconRequest;
+import com.ivona.services.tts.model.GetLexiconResult;
+import com.ivona.services.tts.model.ListLexiconsResult;
 import com.ivona.services.tts.model.ListVoicesRequest;
 import com.ivona.services.tts.model.ListVoicesResult;
+import com.ivona.services.tts.model.PutLexiconRequest;
 
 /**
  * Ivona Speech Cloud Client interface.
@@ -133,4 +138,47 @@ public interface IvonaSpeechCloud {
     public void setRegion(Region region) throws IllegalArgumentException;
 
     public void shutdown();
+
+    /**
+     * Method that calls Ivona Speech Cloud and deletes lexicon specified in the lexiconNameRequest.
+     *
+     * @param deleteLexiconRequest
+     *          request of the DeleteLexicon operation
+     * @throws AmazonServiceException
+     * @throws AmazonClientException
+     */
+    public void deleteLexicon(DeleteLexiconRequest deleteLexiconRequest)
+            throws AmazonServiceException, AmazonClientException;
+
+    /**
+     * Method that calls Ivona Speech Cloud and returns a lexicon.
+     *
+     * @param getLexiconRequest
+     *          request of the GetLexicon operation
+     * @return GetLexiconResult
+     *          result of the GetLexicon call
+     * @throws AmazonServiceException
+     * @throws AmazonClientException
+     */
+    public GetLexiconResult getLexicon(GetLexiconRequest getLexiconRequest)
+            throws AmazonServiceException, AmazonClientException;
+
+    /**
+     * Method that calls Ivona Speech Cloud and returns list of lexicons.
+     *
+     * @return ListLexiconsOutput
+     *          result of the ListLexicons call
+     */
+    public ListLexiconsResult listLexicons();
+
+    /**
+     * Method that calls Ivona Speech Cloud and creates or updates a lexicon.
+     *
+     * @param putLexiconRequest
+     *          request of the PutLexicon operation
+     * @throws AmazonServiceException
+     * @throws AmazonClientException
+     */
+    public void putLexicon(PutLexiconRequest putLexiconRequest)
+            throws AmazonServiceException, AmazonClientException;
 }

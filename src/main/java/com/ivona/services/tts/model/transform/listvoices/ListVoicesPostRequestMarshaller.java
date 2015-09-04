@@ -25,6 +25,8 @@ import com.ivona.services.tts.model.Voice;
 
 import java.io.StringWriter;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 /**
  * ListVoicesRequest Marshaller - transforms ListVoicesRequest into Json request
  */
@@ -32,7 +34,6 @@ public class ListVoicesPostRequestMarshaller implements Marshaller<Request<ListV
         ListVoicesRequestMarshaller {
 
     private final static String RESOURCE_PATH = "ListVoices";
-    private final static String CHARSET = "UTF-8";
 
     protected final static String JSON_KEY_VOICE = "Voice";
     protected final static String JSON_KEY_GENDER = "Gender";
@@ -80,7 +81,7 @@ public class ListVoicesPostRequestMarshaller implements Marshaller<Request<ListV
             jsonWriter.endObject();
 
             String snippet = stringWriter.toString();
-            byte[] content = snippet.getBytes(CHARSET);
+            byte[] content = snippet.getBytes(UTF_8);
             request.setContent(new StringInputStream(snippet));
             request.addHeader("Content-Length", Integer.toString(content.length));
         } catch (Throwable t) {

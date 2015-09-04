@@ -15,50 +15,49 @@ package com.ivona.services.tts.model;
 import java.util.List;
 
 /**
- * Class representing ListVoicesResult
+ * Class representing ListLexicons result
  * <p>
  * Please check the service documentation for more details.
  *
  * @see <a href="http://developer.ivona.com/en/speechcloud/speechcloud_developer_guide.html">Speech Cloud Developer Guide</a>
  */
-public class ListVoicesResult {
-
-    private List<Voice> voices;
+public class ListLexiconsResult {
+    private List<String> lexiconNames;
 
     /**
-     * Get the list of voices from result.
+     * Get the list of lexicon names from result.
      */
-    public List<Voice> getVoices() {
-        return voices;
+    public List<String> getLexiconNames() {
+        return lexiconNames;
     }
 
     /**
-     * Set the list of voices for this result.
+     * Set the list of lexicon names for this result.
      */
-    public void setVoices(List<Voice> voices) {
-        this.voices = voices;
+    public void setLexiconNames(List<String> lexiconNames) {
+        this.lexiconNames = lexiconNames;
     }
 
     /**
-     * Set the list of voices for this result.
+     * Set the list of lexicon names for this result.
      * <p>
      * Returns a reference to this object so that method calls can be chained together.
      */
-    public ListVoicesResult withVoices(List<Voice> voices) {
-        this.voices = voices;
+    public ListLexiconsResult withLexiconNames(List<String> lexiconNames) {
+        this.lexiconNames = lexiconNames;
         return this;
     }
 
     @Override
     public String toString() {
-        return "ListVoicesResult [voices=" + voices + "]";
+        return "ListLexiconsResult [lexiconNames=" + lexiconNames + "]";
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((voices == null) ? 0 : voices.hashCode());
+        result = prime * result + ((lexiconNames == null) ? 0 : lexiconNames.hashCode());
         return result;
     }
 
@@ -73,14 +72,16 @@ public class ListVoicesResult {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        ListVoicesResult other = (ListVoicesResult) obj;
-        if (voices == null) {
-            if (other.voices != null) {
+
+        ListLexiconsResult other = (ListLexiconsResult) obj;
+        if (lexiconNames == null) {
+            if (other.lexiconNames != null) {
                 return false;
             }
-        } else if (!voices.equals(other.voices)) {
+        } else if (!lexiconNames.equals(other.lexiconNames)) {
             return false;
         }
+
         return true;
     }
 }

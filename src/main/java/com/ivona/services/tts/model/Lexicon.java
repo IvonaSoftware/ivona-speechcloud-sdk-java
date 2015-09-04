@@ -13,79 +13,71 @@
 package com.ivona.services.tts.model;
 
 /**
- * Class representing input text and type.
+ * Class representing a lexicon.
  * <p>
  * Please check the service documentation for more details.
  *
- * @see <a href="http://developer.ivona.com/en/speechcloud/speechcloud_developer_guide.html">
- *      Speech Cloud Developer Guide</a>
+ * @see <a href="http://developer.ivona.com/en/speechcloud/speechcloud_developer_guide.html">Speech Cloud Developer Guide</a>
  */
-public class Input {
-
-    private String data;
-    private String type;
+public class Lexicon {
+    private String name;
+    private String contents;
 
     /**
-     * Get the data for the input.
-     * <p>
-     * Data represents the text to be sent and parsed by the service which will be spoken by a voice.
-     * The text can be plain text or valid SSML (in which case the type should be set accordingly).
+     * Get the lexicon name.
      */
-    public String getData() {
-        return data;
+    public String getName() {
+        return this.name;
     }
 
     /**
-     * Set the data for the input.
-     * <p>
-     * Data represents the data to be sent and parsed by the service which will be read by a voice.
+     * Set the lexicon name.
      */
-    public void setData(String data) {
-        this.data = data;
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
-     * Set the data for the input.
+     * Set the lexicon name.
      * <p>
      * Returns a reference to this object so that method calls can be chained together.
-     * Data represents the data to be sent and parsed by the service which will be read by a voice.
      */
-    public Input withData(String data) {
-        this.data = data;
+    public Lexicon withName(String name) {
+        this.name = name;
         return this;
     }
 
     /**
-     * Get what type the data is.
+     * Get the PLS contents of this lexicon.
      */
-    public String getType() {
-        return type;
+    public String getContents() {
+        return this.contents;
     }
 
     /**
-     * Set what type the data is.
+     * Set the PLS contents of this lexicon.
      */
-    public void setType(String type) {
-        this.type = type;
+    public void setContents(String contents) {
+        this.contents = contents;
     }
 
     /**
-     * Set what type the data is.
+     * Set the PLS contents of this lexicon.
      * <p>
      * Returns a reference to this object so that method calls can be chained together.
      */
-    public Input withType(String type) {
-        this.type = type;
+    public Lexicon withContents(String contents) {
+        this.contents = contents;
         return this;
     }
 
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Input [data=");
-        builder.append(data);
-        builder.append(", type=");
-        builder.append(type);
+        builder.append("Lexicon [name=");
+        builder.append(name);
+        builder.append(", contents=");
+        builder.append(contents);
         builder.append("]");
         return builder.toString();
     }
@@ -94,8 +86,8 @@ public class Input {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((data == null) ? 0 : data.hashCode());
-        result = prime * result + ((type == null) ? 0 : type.hashCode());
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + ((contents == null) ? 0 : contents.hashCode());
         return result;
     }
 
@@ -110,21 +102,24 @@ public class Input {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        Input other = (Input) obj;
-        if (data == null) {
-            if (other.data != null) {
+
+        Lexicon other = (Lexicon) obj;
+        if (name == null) {
+            if (other.name != null) {
                 return false;
             }
-        } else if (!data.equals(other.data)) {
+        } else if (!name.equals(other.name)) {
             return false;
         }
-        if (type == null) {
-            if (other.type != null) {
+        if (contents == null) {
+            if (other.contents != null) {
                 return false;
             }
-        } else if (!type.equals(other.type)) {
+        } else if (!contents.equals(other.contents)) {
             return false;
         }
+
         return true;
     }
+
 }

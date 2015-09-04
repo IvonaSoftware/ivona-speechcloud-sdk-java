@@ -126,28 +126,37 @@ public class Voice {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         Voice other = (Voice) obj;
         if (gender == null) {
-            if (other.gender != null)
+            if (other.gender != null) {
                 return false;
-        } else if (!gender.equals(other.gender))
+            }
+        } else if (!gender.equals(other.gender)) {
             return false;
+        }
         if (language == null) {
-            if (other.language != null)
+            if (other.language != null) {
                 return false;
-        } else if (!language.equals(other.language))
+            }
+        } else if (!language.equals(other.language)) {
             return false;
+        }
         if (name == null) {
-            if (other.name != null)
+            if (other.name != null) {
                 return false;
-        } else if (!name.equals(other.name))
+            }
+        } else if (!name.equals(other.name)) {
             return false;
+        }
         return true;
     }
 }

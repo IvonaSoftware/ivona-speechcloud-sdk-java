@@ -40,11 +40,27 @@ import com.amazonaws.transform.Unmarshaller;
 import com.ivona.services.tts.http.StreamResponseHandler;
 import com.ivona.services.tts.model.CreateSpeechRequest;
 import com.ivona.services.tts.model.CreateSpeechResult;
+import com.ivona.services.tts.model.DeleteLexiconRequest;
+import com.ivona.services.tts.model.GetLexiconRequest;
+import com.ivona.services.tts.model.GetLexiconResult;
+import com.ivona.services.tts.model.ListLexiconsRequest;
+import com.ivona.services.tts.model.ListLexiconsResult;
 import com.ivona.services.tts.model.ListVoicesRequest;
 import com.ivona.services.tts.model.ListVoicesResult;
 import com.ivona.services.tts.model.MethodType;
+import com.ivona.services.tts.model.PutLexiconRequest;
 import com.ivona.services.tts.model.transform.createspeech.CreateSpeechRequestMarshallerFactory;
 import com.ivona.services.tts.model.transform.createspeech.CreateSpeechResultUnmarshaller;
+import com.ivona.services.tts.model.transform.lexicons.DeleteLexiconPostRequestMarshaller;
+import com.ivona.services.tts.model.transform.lexicons.DeleteLexiconRequestMarshaller;
+import com.ivona.services.tts.model.transform.lexicons.GetLexiconPostRequestMarshaller;
+import com.ivona.services.tts.model.transform.lexicons.GetLexiconRequestMarshaller;
+import com.ivona.services.tts.model.transform.lexicons.GetLexiconResultJsonUnmarshaller;
+import com.ivona.services.tts.model.transform.lexicons.ListLexiconsPostRequestMarshaller;
+import com.ivona.services.tts.model.transform.lexicons.ListLexiconsRequestMarshaller;
+import com.ivona.services.tts.model.transform.lexicons.ListLexiconsResultJsonUnmarshaller;
+import com.ivona.services.tts.model.transform.lexicons.PutLexiconPostRequestMarshaller;
+import com.ivona.services.tts.model.transform.lexicons.PutLexiconRequestMarshaller;
 import com.ivona.services.tts.model.transform.listvoices.ListVoicesRequestMarshallerFactory;
 import com.ivona.services.tts.model.transform.listvoices.ListVoicesResultJsonUnmarshaller;
 import org.joda.time.DateTime;
@@ -70,8 +86,8 @@ public class IvonaSpeechCloudClient extends AmazonWebServiceClient implements Iv
     private final static String SERVICE_PROTOCOL = "https://";
     private final static String SERVICE_DOMAIN = "ivonacloud.com";
 
-    private final static Pattern REGION_PATTERN = Pattern.compile(SERVICE_PROTOCOL + SERVICE_NAME +
-            "\\.([^.]*)\\." + SERVICE_DOMAIN.replace(".", "\\."));
+    private final static Pattern REGION_PATTERN = Pattern.compile(SERVICE_PROTOCOL + SERVICE_NAME
+            + "\\.([^.]*)\\." + SERVICE_DOMAIN.replace(".", "\\."));
 
     private final static int DEFAULT_GET_REQUEST_EXPIRATION_MINUTES = 5;
 
@@ -131,7 +147,8 @@ public class IvonaSpeechCloudClient extends AmazonWebServiceClient implements Iv
      * @param awsCredentialsProvider
      * @param clientConfiguration
      */
-    public IvonaSpeechCloudClient(AWSCredentialsProvider awsCredentialsProvider, ClientConfiguration clientConfiguration) {
+    public IvonaSpeechCloudClient(AWSCredentialsProvider awsCredentialsProvider,
+            ClientConfiguration clientConfiguration) {
         super(clientConfiguration);
         this.awsCredentialsProvider = awsCredentialsProvider;
         init();
@@ -145,8 +162,8 @@ public class IvonaSpeechCloudClient extends AmazonWebServiceClient implements Iv
         Request<CreateSpeechRequest> request = CreateSpeechRequestMarshallerFactory.getMarshaller(
                 createSpeechRequest.getMethodType()).marshall(createSpeechRequest);
         CreateSpeechResultUnmarshaller unmarshaller = new CreateSpeechResultUnmarshaller();
-        StreamResponseHandler<CreateSpeechResult> responseHandler = new StreamResponseHandler<CreateSpeechResult>(unmarshaller);
-
+        StreamResponseHandler<CreateSpeechResult> responseHandler =
+                new StreamResponseHandler<CreateSpeechResult>(unmarshaller);
         Response<CreateSpeechResult> response = invoke(request, responseHandler, executionContext);
         return response.getAwsResponse();
     }
@@ -167,8 +184,8 @@ public class IvonaSpeechCloudClient extends AmazonWebServiceClient implements Iv
         Request<ListVoicesRequest> request = ListVoicesRequestMarshallerFactory.getMarshaller(
                 listVoicesRequest.getMethodType()).marshall(listVoicesRequest);
         Unmarshaller<ListVoicesResult, JsonUnmarshallerContext> unmarshaller = new ListVoicesResultJsonUnmarshaller();
-        JsonResponseHandler<ListVoicesResult> responseHandler = new JsonResponseHandler<ListVoicesResult>(unmarshaller);
-
+        JsonResponseHandler<ListVoicesResult> responseHandler =
+                new JsonResponseHandler<ListVoicesResult>(unmarshaller);
         Response<ListVoicesResult> response = invoke(request, responseHandler, executionContext);
         return response.getAwsResponse();
     }
@@ -234,6 +251,59 @@ public class IvonaSpeechCloudClient extends AmazonWebServiceClient implements Iv
     @Override
     public void setRegion(Region region) throws IllegalArgumentException {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void deleteLexicon(DeleteLexiconRequest deleteLexiconRequest)
+            throws AmazonServiceException, AmazonClientException {
+
+        ExecutionContext executionContext = createExecutionContext(deleteLexiconRequest);
+        DeleteLexiconRequestMarshaller marshaller = new DeleteLexiconPostRequestMarshaller();
+        Request<DeleteLexiconRequest> request = marshaller.marshall(deleteLexiconRequest);
+        JsonResponseHandler<Void> responseHandler = new JsonResponseHandler<Void>(null);
+
+        invoke(request, responseHandler, executionContext);
+    }
+
+    @Override
+    public GetLexiconResult getLexicon(GetLexiconRequest getLexiconRequest)
+            throws AmazonServiceException, AmazonClientException {
+
+        ExecutionContext executionContext = createExecutionContext(getLexiconRequest);
+        GetLexiconRequestMarshaller marshaller = new GetLexiconPostRequestMarshaller();
+        Request<GetLexiconRequest> request = marshaller.marshall(getLexiconRequest);
+        Unmarshaller<GetLexiconResult, JsonUnmarshallerContext> unmarshaller = new GetLexiconResultJsonUnmarshaller();
+        JsonResponseHandler<GetLexiconResult> responseHandler = new JsonResponseHandler<GetLexiconResult>(unmarshaller);
+
+        Response<GetLexiconResult> response = invoke(request, responseHandler, executionContext);
+        return response.getAwsResponse();
+    }
+
+    @Override
+    public ListLexiconsResult listLexicons() {
+        ListLexiconsRequest listLexiconsRequest = new ListLexiconsRequest();
+        ExecutionContext executionContext = createExecutionContext(listLexiconsRequest);
+        ListLexiconsRequestMarshaller marshaller = new ListLexiconsPostRequestMarshaller();
+        Request<ListLexiconsRequest> request = marshaller.marshall(listLexiconsRequest);
+        Unmarshaller<ListLexiconsResult, JsonUnmarshallerContext> unmarshaller =
+                new ListLexiconsResultJsonUnmarshaller();
+        JsonResponseHandler<ListLexiconsResult> responseHandler =
+                new JsonResponseHandler<ListLexiconsResult>(unmarshaller);
+
+        Response<ListLexiconsResult> response = invoke(request, responseHandler, executionContext);
+        return response.getAwsResponse();
+    }
+
+    @Override
+    public void putLexicon(PutLexiconRequest putLexiconRequest)
+            throws AmazonServiceException, AmazonClientException {
+
+        ExecutionContext executionContext = createExecutionContext(putLexiconRequest);
+        PutLexiconRequestMarshaller marshaller = new PutLexiconPostRequestMarshaller();
+        Request<PutLexiconRequest> request = marshaller.marshall(putLexiconRequest);
+        JsonResponseHandler<Void> responseHandler = new JsonResponseHandler<Void>(null);
+
+        invoke(request, responseHandler, executionContext);
     }
 
     private void init() {

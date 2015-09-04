@@ -10,13 +10,7 @@
  * CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
  * and limitations under the License.
  */
-package com.ivona.services.tts.model.transform.listvoices;
-
-import com.amazonaws.transform.JsonUnmarshallerContext;
-import com.amazonaws.transform.SimpleTypeJsonUnmarshallers;
-import com.amazonaws.transform.Unmarshaller;
-import com.fasterxml.jackson.core.JsonToken;
-import com.ivona.services.tts.model.Voice;
+package com.ivona.services.tts.model.transform.lexicons;
 
 import static com.fasterxml.jackson.core.JsonToken.END_ARRAY;
 import static com.fasterxml.jackson.core.JsonToken.END_OBJECT;
@@ -24,16 +18,21 @@ import static com.fasterxml.jackson.core.JsonToken.FIELD_NAME;
 import static com.fasterxml.jackson.core.JsonToken.START_OBJECT;
 import static com.fasterxml.jackson.core.JsonToken.VALUE_NULL;
 
-public class VoiceJsonUnmarshaller implements Unmarshaller<Voice, JsonUnmarshallerContext> {
-    private static VoiceJsonUnmarshaller instance = new VoiceJsonUnmarshaller();
+import com.amazonaws.transform.JsonUnmarshallerContext;
+import com.amazonaws.transform.ListUnmarshaller;
+import com.amazonaws.transform.SimpleTypeJsonUnmarshallers;
+import com.amazonaws.transform.Unmarshaller;
+import com.fasterxml.jackson.core.JsonToken;
+import com.ivona.services.tts.model.ListLexiconsResult;
 
-    protected final static String JSON_KEY_NAME = "Name";
-    protected final static String JSON_KEY_LANGUAGE = "Language";
-    protected final static String JSON_KEY_GENDER = "Gender";
+/**
+ * ListLexiconsResult Unmarshaller - transforms Json server response into ListLexiconsResult
+ */
+public class ListLexiconsResultJsonUnmarshaller implements Unmarshaller<ListLexiconsResult, JsonUnmarshallerContext> {
+    protected final static String JSON_KEY_LEXICONS = "LexiconNames";
 
-    public Voice unmarshall(JsonUnmarshallerContext context) throws Exception {
-
-        Voice voice = new Voice();
+    public ListLexiconsResult unmarshall(JsonUnmarshallerContext context) throws Exception {
+        ListLexiconsResult listLexiconsResult = new ListLexiconsResult();
 
         int originalDepth = context.getCurrentDepth();
         String currentParentElement = context.getCurrentParentElement();
@@ -53,20 +52,9 @@ public class VoiceJsonUnmarshaller implements Unmarshaller<Voice, JsonUnmarshall
             }
 
             if (token == FIELD_NAME || token == START_OBJECT) {
-                if (context.testExpression(JSON_KEY_NAME, targetDepth)) {
-                    context.nextToken();
-                    voice.setName(
-                            SimpleTypeJsonUnmarshallers.StringJsonUnmarshaller.getInstance().unmarshall(context));
-                }
-                if (context.testExpression(JSON_KEY_LANGUAGE, targetDepth)) {
-                    context.nextToken();
-                    voice.setLanguage(
-                            SimpleTypeJsonUnmarshallers.StringJsonUnmarshaller.getInstance().unmarshall(context));
-                }
-                if (context.testExpression(JSON_KEY_GENDER, targetDepth)) {
-                    context.nextToken();
-                    voice.setGender(
-                            SimpleTypeJsonUnmarshallers.StringJsonUnmarshaller.getInstance().unmarshall(context));
+                if (context.testExpression(JSON_KEY_LEXICONS, targetDepth)) {
+                    listLexiconsResult.setLexiconNames(new ListUnmarshaller<String>(
+                            SimpleTypeJsonUnmarshallers.StringJsonUnmarshaller.getInstance()).unmarshall(context));
                 }
             } else if (token == END_ARRAY || token == END_OBJECT) {
                 if (context.getLastParsedParentElement() == null
@@ -80,10 +68,6 @@ public class VoiceJsonUnmarshaller implements Unmarshaller<Voice, JsonUnmarshall
             token = context.nextToken();
         }
 
-        return voice;
-    }
-
-    public static VoiceJsonUnmarshaller getInstance() {
-        return instance;
+        return listLexiconsResult;
     }
 }

@@ -12,21 +12,54 @@
  */
 package com.ivona.services.tts.model.transform;
 
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
  * The class which contains simple methods used by CreateSpeech and ListVoices marshallers.
  */
 public class MarshallerHelper {
-    public static void putToMapIfNotNull(Map<String, String> map, final String key, final String value) {
+    public static void putToMapIfNotNull(Map<String, List<String>> map, final String key, final String value) {
         if (value != null) {
-            map.put(key, value);
+            map.put(key, Collections.singletonList(value));
         }
     }
 
-    public static void putToMapIfNotNull(Map<String, String> map, final String key, final Short value) {
+    public static void putToMapIfNotNull(Map<String, List<String>> map, final String key, final Short value) {
         if (value != null) {
-            map.put(key, value.toString());
+            map.put(key, Collections.singletonList(value.toString()));
         }
+    }
+
+    public static void putToMapIfTrue(Map<String, List<String>> map, final String key, final boolean value) {
+        if (value) {
+            map.put(key, Collections.singletonList("true"));
+        }
+    }
+
+    public static boolean stringIsNotBlank(String value) {
+        return value != null && !value.trim().isEmpty();
+    }
+
+    public static void putToMapIfNotNull(Map<String, List<String>> map, final String key, final List<String> values) {
+        if (values != null && !values.isEmpty()) {
+            map.put(key, Collections.singletonList(convertListToString(values)));
+        }
+    }
+
+    private static String convertListToString(final List<String> values) {
+        StringBuilder sb = new StringBuilder();
+        Iterator<String> it = values.iterator();
+        boolean isFirst = true;
+        while (it.hasNext()) {
+            if (!isFirst) {
+                sb.append(",");
+            }
+            sb.append(it.next());
+            isFirst = false;
+        }
+        return sb.toString();
     }
 }

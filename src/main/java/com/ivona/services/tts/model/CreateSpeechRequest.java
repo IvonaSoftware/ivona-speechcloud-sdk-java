@@ -12,24 +12,24 @@
  */
 package com.ivona.services.tts.model;
 
-import java.io.Serializable;
-
 import com.amazonaws.AmazonWebServiceRequest;
+
+import java.util.List;
 
 /**
  * Class representing CreateSpeech request
  * <p>
  * Please check the service documentation for more details.
  *
- * @see <a href="http://developer.ivona.com/en/speechcloud/speechcloud_developer_guide.html">Speech Cloud Developer Guide</a>
+ * @see <a href="http://developer.ivona.com/en/speechcloud/speechcloud_developer_guide.html">
+ * Speech Cloud Developer Guide</a>
  */
-public class CreateSpeechRequest extends AmazonWebServiceRequest implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class CreateSpeechRequest extends AmazonWebServiceRequest {
 
     private Input input;
     private OutputFormat outputFormat;
     private Parameters parameters;
+    private List<String> lexiconNames;
     private Voice voice;
     private MethodType methodType;
 
@@ -48,7 +48,6 @@ public class CreateSpeechRequest extends AmazonWebServiceRequest implements Seri
     public void setInput(Input input) {
         this.input = input;
     }
-
 
     /**
      * Set the input text for the request.
@@ -113,6 +112,32 @@ public class CreateSpeechRequest extends AmazonWebServiceRequest implements Seri
     }
 
     /**
+     * Get the lexicons for the request.
+     * <p>
+     * Lexicons are optional.
+     */
+    public List<String> getLexiconNames() {
+        return lexiconNames;
+    }
+
+    /**
+     * Set the lexicons for the request.
+     */
+    public void setLexiconNames(List<String> lexiconNames) {
+        this.lexiconNames = lexiconNames;
+    }
+
+    /**
+     * Set the lexicons for the request.
+     * <p>
+     * Returns a reference to this object so that method calls can be chained together.
+     */
+    public CreateSpeechRequest withLexiconNames(List<String> lexiconNames) {
+        this.lexiconNames = lexiconNames;
+        return this;
+    }
+
+    /**
      * Get which Voice is requested to speak.
      * <p>
      * Voice is optional.
@@ -173,10 +198,12 @@ public class CreateSpeechRequest extends AmazonWebServiceRequest implements Seri
         builder.append(outputFormat);
         builder.append(", parameters=");
         builder.append(parameters);
+        builder.append(", lexiconNames=");
+        builder.append(lexiconNames);
         builder.append(", voice=");
         builder.append(voice);
         builder.append(", methodType=");
-        builder.append(methodType.toString());
+        builder.append(methodType);
         builder.append("]");
         return builder.toString();
     }
@@ -188,6 +215,7 @@ public class CreateSpeechRequest extends AmazonWebServiceRequest implements Seri
         result = prime * result + ((input == null) ? 0 : input.hashCode());
         result = prime * result + ((outputFormat == null) ? 0 : outputFormat.hashCode());
         result = prime * result + ((parameters == null) ? 0 : parameters.hashCode());
+        result = prime * result + ((lexiconNames == null) ? 0 : lexiconNames.hashCode());
         result = prime * result + ((voice == null) ? 0 : voice.hashCode());
         result = prime * result + ((methodType == null) ? 0 : methodType.hashCode());
         return result;
@@ -196,44 +224,58 @@ public class CreateSpeechRequest extends AmazonWebServiceRequest implements Seri
     @Override
     public boolean equals(Object obj) {
 
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
-
+        }
         CreateSpeechRequest other = (CreateSpeechRequest) obj;
         if (input == null) {
-            if (other.input != null)
+            if (other.input != null) {
                 return false;
-        } else if (!input.equals(other.input))
+            }
+        } else if (!input.equals(other.input)) {
             return false;
-
+        }
         if (outputFormat == null) {
-            if (other.outputFormat != null)
+            if (other.outputFormat != null) {
                 return false;
-        } else if (!outputFormat.equals(other.outputFormat))
+            }
+        } else if (!outputFormat.equals(other.outputFormat)) {
             return false;
-
+        }
         if (parameters == null) {
-            if (other.parameters != null)
+            if (other.parameters != null) {
                 return false;
-        } else if (!parameters.equals(other.parameters))
+            }
+        } else if (!parameters.equals(other.parameters)) {
             return false;
-
+        }
+        if (lexiconNames == null) {
+            if (other.lexiconNames != null) {
+                return false;
+            }
+        } else if (!lexiconNames.equals(other.lexiconNames)) {
+            return false;
+        }
         if (voice == null) {
-            if (other.voice != null)
+            if (other.voice != null) {
                 return false;
-        } else if (!voice.equals(other.voice))
+            }
+        } else if (!voice.equals(other.voice)) {
             return false;
-
+        }
         if (methodType == null) {
-            if (other.methodType != null)
+            if (other.methodType != null) {
                 return false;
-        } else if (!methodType.equals(other.methodType))
+            }
+        } else if (!methodType.equals(other.methodType)) {
             return false;
-
+        }
         return true;
     }
 }

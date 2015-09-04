@@ -12,53 +12,57 @@
  */
 package com.ivona.services.tts.model;
 
-import java.util.List;
+import com.amazonaws.AmazonWebServiceRequest;
 
 /**
- * Class representing ListVoicesResult
+ * Class representing PutLexicon request
  * <p>
  * Please check the service documentation for more details.
  *
  * @see <a href="http://developer.ivona.com/en/speechcloud/speechcloud_developer_guide.html">Speech Cloud Developer Guide</a>
  */
-public class ListVoicesResult {
+public class PutLexiconRequest extends AmazonWebServiceRequest {
 
-    private List<Voice> voices;
+    private Lexicon lexicon;
 
     /**
-     * Get the list of voices from result.
+     * Get the lexicon for the request.
      */
-    public List<Voice> getVoices() {
-        return voices;
+    public Lexicon getLexicon() {
+        return lexicon;
     }
 
     /**
-     * Set the list of voices for this result.
+     * Set the lexicon for the request.
      */
-    public void setVoices(List<Voice> voices) {
-        this.voices = voices;
+    public void setLexicon(Lexicon lexicon) {
+        this.lexicon = lexicon;
     }
 
     /**
-     * Set the list of voices for this result.
+     * Set the lexicon for the request.
      * <p>
      * Returns a reference to this object so that method calls can be chained together.
      */
-    public ListVoicesResult withVoices(List<Voice> voices) {
-        this.voices = voices;
+    public PutLexiconRequest withLexicon(Lexicon lexicon) {
+        this.lexicon = lexicon;
         return this;
     }
 
     @Override
     public String toString() {
-        return "ListVoicesResult [voices=" + voices + "]";
+        StringBuilder builder = new StringBuilder();
+        builder.append("PutLexiconRequest [lexicon=");
+        builder.append(lexicon);
+        builder.append("]");
+        return builder.toString();
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((voices == null) ? 0 : voices.hashCode());
+        result = prime * result + ((lexicon == null) ? 0 : lexicon.hashCode());
         return result;
     }
 
@@ -73,14 +77,16 @@ public class ListVoicesResult {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        ListVoicesResult other = (ListVoicesResult) obj;
-        if (voices == null) {
-            if (other.voices != null) {
+
+        PutLexiconRequest other = (PutLexiconRequest) obj;
+        if (lexicon == null) {
+            if (other.lexicon != null) {
                 return false;
             }
-        } else if (!voices.equals(other.voices)) {
+        } else if (!lexicon.equals(other.lexicon)) {
             return false;
         }
+
         return true;
     }
 }

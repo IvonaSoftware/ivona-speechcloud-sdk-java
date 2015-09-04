@@ -22,6 +22,7 @@ import com.ivona.services.tts.model.ListVoicesRequest;
 import com.ivona.services.tts.model.transform.MarshallerHelper;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -53,12 +54,15 @@ public class ListVoicesGetRequestMarshaller implements Marshaller<Request<ListVo
     }
 
     protected void setRequestParameters(Request<ListVoicesRequest> request, ListVoicesRequest listVoicesRequest) {
-        Map<String, String> parameters = new HashMap<String, String>();
+        Map<String, List<String>> parameters = new HashMap<String, List<String>>();
 
         if (listVoicesRequest.getVoice() != null) {
-            MarshallerHelper.putToMapIfNotNull(parameters, PARAM_VOICE_NAME, listVoicesRequest.getVoice().getName());
-            MarshallerHelper.putToMapIfNotNull(parameters, PARAM_VOICE_LANGUAGE, listVoicesRequest.getVoice().getLanguage());
-            MarshallerHelper.putToMapIfNotNull(parameters, PARAM_VOICE_GENDER, listVoicesRequest.getVoice().getGender());
+            MarshallerHelper.putToMapIfNotNull(parameters, PARAM_VOICE_NAME,
+                    listVoicesRequest.getVoice().getName());
+            MarshallerHelper.putToMapIfNotNull(parameters, PARAM_VOICE_LANGUAGE,
+                    listVoicesRequest.getVoice().getLanguage());
+            MarshallerHelper.putToMapIfNotNull(parameters, PARAM_VOICE_GENDER,
+                    listVoicesRequest.getVoice().getGender());
         }
 
         request.setParameters(parameters);

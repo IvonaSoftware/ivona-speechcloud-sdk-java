@@ -14,7 +14,7 @@ A ready-to-use package is available through Maven:
 <dependency>
     <groupId>com.ivona</groupId>
     <artifactId>ivona-speechcloud-sdk-java</artifactId>
-    <version>0.3.0</version>
+    <version>1.0.0</version>
 </dependency>
 ```
 

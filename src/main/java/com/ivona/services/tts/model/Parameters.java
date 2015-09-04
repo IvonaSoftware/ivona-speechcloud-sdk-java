@@ -150,33 +150,44 @@ public class Parameters {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         Parameters other = (Parameters) obj;
         if (paragraphBreak == null) {
-            if (other.paragraphBreak != null)
+            if (other.paragraphBreak != null) {
                 return false;
-        } else if (!paragraphBreak.equals(other.paragraphBreak))
+            }
+        } else if (!paragraphBreak.equals(other.paragraphBreak)) {
             return false;
+        }
         if (rate == null) {
-            if (other.rate != null)
+            if (other.rate != null) {
                 return false;
-        } else if (!rate.equals(other.rate))
+            }
+        } else if (!rate.equals(other.rate)) {
             return false;
+        }
         if (sentenceBreak == null) {
-            if (other.sentenceBreak != null)
+            if (other.sentenceBreak != null) {
                 return false;
-        } else if (!sentenceBreak.equals(other.sentenceBreak))
+            }
+        } else if (!sentenceBreak.equals(other.sentenceBreak)) {
             return false;
+        }
         if (volume == null) {
-            if (other.volume != null)
+            if (other.volume != null) {
                 return false;
-        } else if (!volume.equals(other.volume))
+            }
+        } else if (!volume.equals(other.volume)) {
             return false;
+        }
         return true;
     }
 }

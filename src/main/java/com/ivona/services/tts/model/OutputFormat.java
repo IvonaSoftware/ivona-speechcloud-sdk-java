@@ -23,6 +23,7 @@ public class OutputFormat {
 
     private String codec;
     private Short sampleRate;
+    private SpeechMarks speechMarks;
 
     /**
      * Get the codec used for this synthesis.
@@ -72,6 +73,30 @@ public class OutputFormat {
         return this;
     }
 
+    /**
+     * Get the speech marks for this synthesis.
+     */
+    public SpeechMarks getSpeechMarks() {
+        return speechMarks;
+    }
+
+    /**
+     * Set the speech marks for this format.
+     */
+    public void setSpeechMarks(SpeechMarks speechMarks) {
+        this.speechMarks = speechMarks;
+    }
+
+    /**
+     * Set the speech marks for this format.
+     * <p>
+     * Returns a reference to this object so that method calls can be chained together.
+     */
+    public OutputFormat withSpeechMarks(SpeechMarks speechMarks) {
+        this.speechMarks = speechMarks;
+        return this;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -79,6 +104,8 @@ public class OutputFormat {
         builder.append(codec);
         builder.append(", sampleRate=");
         builder.append(sampleRate);
+        builder.append(", speechMarks=");
+        builder.append(speechMarks);
         builder.append("]");
         return builder.toString();
     }
@@ -89,28 +116,43 @@ public class OutputFormat {
         int result = 1;
         result = prime * result + ((codec == null) ? 0 : codec.hashCode());
         result = prime * result + ((sampleRate == null) ? 0 : sampleRate.hashCode());
+        result = prime * result + ((speechMarks == null) ? 0 : speechMarks.hashCode());
         return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         OutputFormat other = (OutputFormat) obj;
         if (codec == null) {
-            if (other.codec != null)
+            if (other.codec != null) {
                 return false;
-        } else if (!codec.equals(other.codec))
+            }
+        } else if (!codec.equals(other.codec)) {
             return false;
+        }
         if (sampleRate == null) {
-            if (other.sampleRate != null)
+            if (other.sampleRate != null) {
                 return false;
-        } else if (!sampleRate.equals(other.sampleRate))
+            }
+        } else if (!sampleRate.equals(other.sampleRate)) {
             return false;
+        }
+        if (speechMarks == null) {
+            if (other.speechMarks != null) {
+                return false;
+            }
+        } else if (!speechMarks.equals(other.speechMarks)) {
+            return false;
+        }
         return true;
     }
 }

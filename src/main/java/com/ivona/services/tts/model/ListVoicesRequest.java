@@ -12,8 +12,6 @@
  */
 package com.ivona.services.tts.model;
 
-import java.io.Serializable;
-
 import com.amazonaws.AmazonWebServiceRequest;
 
 /**
@@ -23,9 +21,8 @@ import com.amazonaws.AmazonWebServiceRequest;
  *
  * @see <a href="http://developer.ivona.com/en/speechcloud/speechcloud_developer_guide.html">Speech Cloud Developer Guide</a>
  */
-public class ListVoicesRequest extends AmazonWebServiceRequest implements Serializable {
+public class ListVoicesRequest extends AmazonWebServiceRequest {
 
-    private static final long serialVersionUID = 1L;
     private Voice voice;
     private MethodType methodType;
 
@@ -101,7 +98,6 @@ public class ListVoicesRequest extends AmazonWebServiceRequest implements Serial
         return this;
     }
 
-
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -124,26 +120,30 @@ public class ListVoicesRequest extends AmazonWebServiceRequest implements Serial
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
-
+        }
         ListVoicesRequest other = (ListVoicesRequest) obj;
         if (voice == null) {
-            if (other.voice != null)
+            if (other.voice != null) {
                 return false;
-        } else if (!voice.equals(other.voice))
+            }
+        } else if (!voice.equals(other.voice)) {
             return false;
-
+        }
         if (methodType == null) {
-            if (other.methodType != null)
+            if (other.methodType != null) {
                 return false;
-        } else if (!methodType.equals(other.methodType))
+            }
+        } else if (!methodType.equals(other.methodType)) {
             return false;
-
+        }
         return true;
     }
 }
